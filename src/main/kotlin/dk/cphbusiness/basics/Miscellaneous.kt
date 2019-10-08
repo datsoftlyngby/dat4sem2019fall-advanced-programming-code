@@ -50,9 +50,16 @@ fun main() {
     otherData["owner"] = "Sonja"
     // val data = mutableMapOf<String, Any?>("name".pointsAt("Ninus"), "age" pointsAt 5)
     // data["owner"] = "Kurt".repeat(5)
-    val data = mutableMapOf<String, Any?>("name" to "Ninus", "age" to 5, "owner" to "Kurt")
+    val data = mutableMapOf<String, Any?>("name" to "Ninus", "age" to 5, "owner".to("Kurt"))
     val pet = Pet(data)
     println("Dyrets navn er ${pet.name} og det er ${pet.age} gammelt")
-    pet.age += 1
+    println("""
+        Dyrets navn er ${pet.name}
+        ------------------------------
+        Alder: ${pet.age}
+        Ejer:  ${pet.owner}
+        """.trimIndent()
+        )
+    // pet.age += 1
     println(data)
     }
