@@ -8,6 +8,8 @@ class Book(val title: String) {
         lines.add(line)
         }
 
+    operator fun String.unaryPlus() { lines.add(this) }
+
     fun print() {
         println("<h1>$title</h1>")
         println("<h2>$subtitle</h2>")
@@ -29,5 +31,6 @@ fun main() {
         subtitle = "Russian Romance"
         line("Once upon a time")
         line("in the wild west...")
+        +"and here is what I was trying to do in class"
         }.print()
     }
