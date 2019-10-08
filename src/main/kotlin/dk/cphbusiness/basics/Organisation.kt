@@ -1,6 +1,6 @@
 package dk.cphbusiness.basics
 
-open class Person(var firstName: String, var lastName: String, val dateOfBirth: String)
+open class Person (var firstName: String, var lastName: String, val dateOfBirth: String)
 
 class Employee(
         firstName: String,
