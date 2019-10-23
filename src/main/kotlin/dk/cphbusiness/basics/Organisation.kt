@@ -13,6 +13,7 @@ class Employee(
 
     val relatives = mutableListOf<Relative>()
 
+    private var note = ""
     var department: Department = department
         get() = field
         set(value) {
@@ -27,6 +28,10 @@ class Employee(
 
     init {
         department.add(this)
+        }
+
+    fun print() {
+        println("$firstName $lastName")
         }
     }
 
