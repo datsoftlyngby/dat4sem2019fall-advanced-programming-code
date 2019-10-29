@@ -14,9 +14,11 @@ class Stone {
     fun dontSayHello() = "Shh..."
     }
 
+class Address(val street: String, val city: String)
+
 
 fun main() {
-    val kurt = Person(7, "Kurt", "Hansen", 27)
+    val kurt = Person(7, "Kurt", "Hansen", 27) //, Address("Byvej 7", "3600 Frederikssund"))
     val rufus = Dog()
     val stone = Stone()
     /*
@@ -38,11 +40,17 @@ fun main() {
     println("=======")
     sayHelloIfPossible(stone)
     println()
-    println(toJson(kurt))
+    println(toJson1_5(kurt))
 
+    printMembers(kurt)
 
     }
 
+
+fun printMembers(what: Any) {
+    what::class.java.methods.forEach { println(it) }
+    what::class.members.forEach { println(it) }
+    }
 
 fun sayHelloIfPossible(some: Any) {
     val type = some::class
@@ -57,27 +65,3 @@ fun sayHelloIfPossible(some: Any) {
     println(saying.call(some, "Sonja"))
     }
 
-fun toJson(what: Any) =
-    what::class.memberProperties
-        .map { """  "${it.name}": ${jsonValueOf(it.call(what))}""" }
-        .joinToString(",\n", "{\n", "\n}\n")
-
-fun toJson2(what: Any) : String {
-    var json = ""
-    val type = what::class
-    for (property in type.memberProperties) {
-        val name = property.name
-        val value = property.call(what)
-        if (json.isEmpty()) json = "{\n  \"$name\": \"$value\""
-        else json += ",\n  \"$name\": \"$value\""
-        }
-  return json+"\n}\n"
-  }
-
-fun jsonValueOf(value: Any?) =
-    when (value) {
-        null -> "null"
-        is Int -> value.toString()
-        is Double -> value.toString()
-        else -> """"$value""""
-        }
