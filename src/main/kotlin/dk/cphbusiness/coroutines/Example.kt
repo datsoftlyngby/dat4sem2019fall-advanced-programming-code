@@ -1,11 +1,14 @@
 package dk.cphbusiness.coroutines
 
+import java.lang.Thread.sleep
 import kotlin.concurrent.thread
 
+
+fun withCoroutines() {
+
+    }
+
 fun main() {
-    thread {
-        Thread.sleep(1000)
-        println("World!")
-        }
     println("Hello")
+//    withThreads()
     }
