@@ -6,11 +6,7 @@ import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.selects.select
 
-fun mainx() {
-    println("Hello World!")
-    }
-
-fun mainy() = runBlocking<Unit> {
+fun mainx() = runBlocking<Unit> {
     val names = Channel<String>()
     val greetings = Channel<String>()
     greeter(7, names, greetings)
@@ -18,10 +14,8 @@ fun mainy() = runBlocking<Unit> {
     greeter(23, names, greetings)
     println("Sending names...")
     launch {
-        names.apply {
-            send("Ole")
-            send("Gregers")
-            }
+        names.send("Ole")
+        names.send("Gregers")
         names.send("Kurt")
         names.send("Sonja")
         names.send("Anders")
