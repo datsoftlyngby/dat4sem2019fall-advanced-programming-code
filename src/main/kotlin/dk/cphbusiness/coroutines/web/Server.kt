@@ -1,6 +1,7 @@
 package dk.cphbusiness.coroutines.web
 
 import kotlinx.coroutines.*
+import java.io.BufferedInputStream
 import java.net.ServerSocket
 import java.net.Socket
 import kotlin.coroutines.CoroutineContext
@@ -53,7 +54,17 @@ class Server(val port: Int) : CoroutineScope {
   }
 
 fun main() {
-  println("Starting server")
-  val server = Server(4711)
-  server.serve()
+  // println("Starting server")
+  // val server = Server(4711)
+  // server.serve()
+
+  val requestText = """
+    GET /resource HTTP/1.1
+    
+    
+    """.trimIndent()
+  val bytes = requestText.byteInputStream()
+  val bin = bytes.bufferedReader()
+  println(bin.readLine())
+
   }
