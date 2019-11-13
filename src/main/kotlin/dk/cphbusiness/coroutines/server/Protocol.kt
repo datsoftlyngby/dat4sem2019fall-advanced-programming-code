@@ -7,6 +7,9 @@ import java.lang.StringBuilder
 
 enum class Method { GET, PUT, POST, DELETE }
 
+class Protocol {
+  }
+
 class Request(input: InputStream) {
   val resource: String
   val method: Method
@@ -16,6 +19,7 @@ class Request(input: InputStream) {
     val parts = line.split(" ")
     resource = parts[1]
     method = Method.valueOf(parts[0])
+
     }
   }
 

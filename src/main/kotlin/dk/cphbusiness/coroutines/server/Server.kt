@@ -5,6 +5,7 @@ import kotlin.concurrent.thread
 
 class Server(val port: Int = 4711) {
   var running = true
+  val serverSocket = ServerSocket(port)
 
   fun handle(request: Request, response: Response) {
     println(request.resource)
@@ -12,7 +13,6 @@ class Server(val port: Int = 4711) {
     }
 
   fun start() {
-    val serverSocket = ServerSocket(port)
     while (running) {
       val socket = serverSocket.accept()
       thread {
@@ -21,9 +21,23 @@ class Server(val port: Int = 4711) {
       }
     }
 
+  fun stop() {
+    running = false
+    serverSocket.close()
+    }
+
   }
 
 fun main() {
   println("Starting server")
-  Server().start()
+  val server = Server()
+  thread { server.start() }
+  var line = readLine()
+  while (line != null) {
+    when (line) {
+      "stop" -> server.stop()
+      else -> println( "czczc")
+      }
+    line = readLine()
+    }
   }
