@@ -64,7 +64,9 @@ fun Charset.isContinuation(byte: Int) =
 fun Charset.isStart(byte: Int) = !isContinuation(byte)
 
 fun OutputStream.writeLine(line: String, charset: Charset = Charsets.UTF_8) =
-    apply { write(line).write(LF) }
+    apply {
+      write(line).write(LF)
+      }
 
 fun OutputStream.writeLine() = apply { write(LF) }
 

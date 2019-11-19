@@ -5,7 +5,7 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.lang.StringBuilder
 
-enum class Method { GET, PUT, POST, DELETE }
+enum class Method { GET, PUT, POST, DELETE, NONHTTP }
 
 class Protocol {
   }
@@ -19,18 +19,26 @@ class Request(input: InputStream) {
   init {
     var line = input.readLine()
     val parts = line.split(" ")
-    resource = parts[1]
-    method = Method.valueOf(parts[0])
+    if (parts.size != 3) {
+      resource = ""
+      method = Method.NONHTTP
+      }
+    else {
+      resource = parts[1]
+      method = Method.valueOf(parts[0])
+      }
     line = input.readLine()
     while (line.isNotEmpty()) {
       val headerParts = line.split(":")
-      headers[headerParts[0].trim()] = headerParts[1].trim()
+      headers[headerParts[0].trim().toLowerCase()] = headerParts[1].trim()
       line = input.readLine()
       }
 
     // read headers here and get Content-Length
-    val contentLenght = headers["Content-Length"]!!.toInt()
-    body = input.readString(contentLenght)
+
+    val contentLenghtText = headers["content-length"]
+    if (contentLenghtText == null) body = ""
+    else body = input.readString(contentLenghtText.toInt())
     }
   }
 

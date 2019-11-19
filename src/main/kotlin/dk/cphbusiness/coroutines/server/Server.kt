@@ -10,6 +10,7 @@ class Server(val port: Int = 4711) {
   fun handle(request: Request, response: Response) {
     println(request.resource)
     // TODO("Implement!")
+    response.send()
     }
 
   fun start() {
