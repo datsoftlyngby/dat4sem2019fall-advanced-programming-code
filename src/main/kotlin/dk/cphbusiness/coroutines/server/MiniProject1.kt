@@ -1,8 +1,10 @@
 package dk.cphbusiness.coroutines.server
 
+import com.google.gson.Gson
 import kotlin.reflect.full.declaredFunctions
 import kotlin.reflect.full.memberFunctions
 
+val gson = Gson()
 interface WebContent {
   fun save()
   }
@@ -16,6 +18,7 @@ class WebServer(val content: WebContent, val port: Int) {
 data class Member(val id: Int, val name: String)
 
 class ChoirContent : WebContent {
+  var nextId = 20
   val members = mutableMapOf<Int, Member>(
     7 to Member(7, "Kurt"),
     17 to Member(17, "Sonja")
@@ -24,9 +27,16 @@ class ChoirContent : WebContent {
 
   fun getMember(id: Int): Member? = members[id]
 
-  fun putMember(member: Member): Member =
-      TODO("Implement PUT /member")
-  // ...
+  fun putMember(member: Member): Member {
+    if (member.id == 0 || member.id > nextId) {
+      val m = member.copy(id = nextId++)
+      members[m.id] = m
+      return m
+      }
+    members[member.id] = member
+    return member
+    }
+
   override fun save() {
     TODO("implement function save")
     }
@@ -55,13 +65,17 @@ fun callFunction(content: Any, method: Method, resource: String, body: String) :
   if (function == null) return null
   if (function.parameters.size > 1) {
     val p = function.parameters[1]
-    println(p.type.classifier)
-    when (p.type.classifier) {
+    val klass = p.type.classifier
+    println(klass)
+    when (klass) {
       Int::class -> {
         val v1 = parts[1].toInt()
         return function.call(content, v1)
         }
-      else -> return null
+      else -> {
+        val p1 = gson.fromJson(parts[1], p.type.javaClass)
+        return function.call(content, p1)
+        }
       }
     }
   else return function.call(content)
