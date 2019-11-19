@@ -40,8 +40,8 @@ fun listFunctions(content: Any) {
     }
   }
 
-fun callFunction(content: Any, method: Method, resource: String) : Any? {
-  val parts = resource.split("/").filter { !it.isEmpty() }
+fun callFunction(content: Any, method: Method, resource: String, body: String) : Any? {
+  val parts = (resource.split("/") + body).filter { !it.isEmpty() }
   println(parts)
   if (parts.size == 0) return null
 
@@ -69,7 +69,9 @@ fun callFunction(content: Any, method: Method, resource: String) : Any? {
 
 fun main() {
   val content = ChoirContent()
-  println(callFunction(content, Method.GET, "/member/7"))
+  println(callFunction(content, Method.GET, "/member/7", "body"))
+  println(callFunction(content, Method.GET, "/member/7", ""))
+  println(callFunction(content, Method.GET, "/member", "7"))
 /*
   val server = WebServer(content, 4711)
   server.start()
