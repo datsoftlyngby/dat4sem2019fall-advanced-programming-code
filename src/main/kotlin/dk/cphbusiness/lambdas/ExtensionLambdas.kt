@@ -19,18 +19,19 @@ class Book(val title: String) {
         }
     }
 
-fun book(title: String, initialize: Book.() -> Unit = { }): Book {
+fun book(title: String, build: Book.() -> Unit = { }): Book {
     val book = Book(title)
-    book.initialize()
+    book.build()
     return book
     }
 
 
 fun main() {
-    book("War and peace") {
+    val b = book("War and peace") {
         subtitle = "Russian Romance"
         line("Once upon a time")
         line("in the wild west...")
         +"and here is what I was trying to do in class"
-        }.print()
+        }
+    b.print()
     }

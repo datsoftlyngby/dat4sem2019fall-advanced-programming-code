@@ -3,7 +3,7 @@ package dk.cphbusiness.lambdas
 import java.io.File
 
 fun main() {
-    val list = listOf(7, 9, 13, 42, 80, 144, 117, 1001, 56, 90)
+    val list = listOf(7, 9, 13, 42, 80, 31, 144, 117, 1001, 56, 90)
     list
         .map { println("First $it"); it }
         .filter { it%2 == 0 }
